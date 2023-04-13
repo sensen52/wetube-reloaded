@@ -1,0 +1,16 @@
+extends base.pug
+
+block content
+    if errorMessage 
+        span= errorMessage
+
+    form(method="POST")
+        input(name="username", type="text", required:true,placeholder="유저이름")
+        input(name="password", type="password", required:true,placeholder="비밀번호")
+        input(type="submit", value="login")
+
+    hr
+    div
+        span Don't have an account?
+        a(href="/join") Create now &rarr;
+        

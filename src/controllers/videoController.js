@@ -21,14 +21,14 @@ export const watch = async (req, res) => {
   if (video) {
     return res.render("watch", { pageTitle: video.title, video: video });
   }
-  return res.render("404", { pageTitle: "Video not found" });
+  return res.status(404).render("404", { pageTitle: "Video not found" });
 };
 
 export const getEdit = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id); //edit 템플릿에 video object를 보내야되서 이건 exists가 아니라 findById(아이디맞는지 정밀확인)이다
   if (!video) {
-    return res.render("404", { pageTitle: "Video not found" });
+    return res.status(404).render("404", { pageTitle: "Video not found" });
   }
   return res.render("edit", { pageTitle: `Edit ${video.title}`, video: video });
 };
@@ -38,7 +38,7 @@ export const postEdit = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const video = await Video.exists({ _id: id }); //위에와 달리 단순히 영상이 존재하는지만 확인하면 되기 때문에 exits(존재여부확인)가 맞다
   if (!video) {
-    return res.render("404", { pageTitle: "Video not found" });
+    return res.status(404).render("404", { pageTitle: "Video not found" });
   }
   await Video.findByIdAndUpdate(id, {
     title: title,
@@ -63,7 +63,7 @@ export const postUpload = async (req, res) => {
     });
     return res.redirect("/");
   } catch (error) {
-    return res.render("upload", {
+    return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
     });
