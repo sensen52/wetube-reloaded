@@ -1,3 +1,5 @@
+// require ("dotenv").config();
+import "dotenv/config"
 import "./db";
 import "./Models/Video";
 import "./Models/User";
